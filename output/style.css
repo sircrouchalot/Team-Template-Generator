@@ -1,0 +1,13 @@
+.card {
+    margin: 20px;
+}
+
+.card-header {
+    background-color: #3860a1;
+    color: white;
+}
+
+.team-heading {
+    background-color: #7b9095;
+    color: white;
+}
