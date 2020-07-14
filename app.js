@@ -33,6 +33,7 @@ const render = require("./lib/htmlRenderer");
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
+var employees = [];
 
 inquirer
   .prompt([
@@ -79,10 +80,21 @@ inquirer
     }
   ])
   .then(function(response) {
+      id = 1;
 
     const { role, name } = response;
 
-    
+    // switch(response.role) {
+    //     case "Manager":
+    //         const newEmployee = new Manager(response.name, id, response.email, response.officeNumber);
+    //         break;
+    //     case "Engineer":
+    //         const newEmployee = new Engineer(response.name, id, response.email, response.github);
+    //         break;
+    //     case "Intern":
+    //         const newEmployee = new Intern(response.name, id, response.email, response.school);
+    //         break;
+    // }
 
-    console.log(response);
+    // console.log(newEmployee);
   });
