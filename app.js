@@ -80,7 +80,7 @@ var questions = [
 ];
 
 function runInquirer(array) {
-  inquirer.prompt(questions).then(function (response) {
+  inquirer.prompt(array).then(function (response) {
     switch(response.role) {
       case "Engineer":
         var newEngineer = new Engineer(response.name, id, response.email, response.github);
@@ -105,10 +105,13 @@ function runInquirer(array) {
       id++;
       runInquirer(questions);
     } else {
-      console.log(employees);
+      fs.writeFile(outputPath, render(employees), (err) => {
+        if (err) throw err;
+        else console.log("Successfully created team page!")
+      })
     }
+
   });
 }
 
 runInquirer(questions);
-
