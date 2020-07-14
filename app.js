@@ -34,6 +34,8 @@ const render = require("./lib/htmlRenderer");
 // for the provided `render` function to work! ```
 var employees = [];
 
+var id = 1;
+
 var questions = [
   {
     type: "list",
@@ -79,9 +81,28 @@ var questions = [
 
 function runInquirer(array) {
   inquirer.prompt(questions).then(function (response) {
-    employees.push(response);
+    switch(response.role) {
+      case "Engineer":
+        var newEngineer = new Engineer(response.name, id, response.email, response.github);
+        employees.push(newEngineer);
+        break;
+
+      case "Manager":
+        var newManager = new Manager(response.name, id, response.email, response.officeNumber);
+        employees.push(newManager);
+        break;
+
+      case "Intern":
+        var newIntern = new Intern(response.name, id, response.email, response.school);
+        employees.push(newIntern);
+        break;
+
+      default:
+        break;
+    }
 
     if (response.repeat) {
+      id++;
       runInquirer(questions);
     } else {
       console.log(employees);
@@ -90,3 +111,4 @@ function runInquirer(array) {
 }
 
 runInquirer(questions);
+
