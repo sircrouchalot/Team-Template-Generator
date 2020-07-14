@@ -20,3 +20,5 @@ npm test
 ```
 
 ## Demo
+
+![demo](./demo/demo.gif)
