@@ -10,7 +10,6 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -35,66 +34,59 @@ const render = require("./lib/htmlRenderer");
 // for the provided `render` function to work! ```
 var employees = [];
 
-inquirer
-  .prompt([
-    {
-      type: "list",
-      message: "What role does this employee have?",
-      name: "role",
-      choices: ["Engineer", "Intern", "Manager"],
-      
-    },
-    {
-      type: "input",
-      message: "What is the employee's name?",
-      name: "name",
-    },
-    {
-      type: "input",
-      message: "What is the employee's email address?",
-      name: "email",
-    },
-    {
-      type: "input",
-      message: "What is the intern's school?",
-      name: "school",
-      when: (response) => response.role === "Intern"
-    },
-    {
-      type: "github",
-      message: "What is the engineer's github username?",
-      name: "github",
-      when: (response) => response.role === "Engineer"
-    },
-    {
-      type: "officeNumber",
-      message: "What is the manager's office phone number?",
-      name: "officeNumber",
-      when: (response) => response.role === "Manager"
-    },
-    {
-      type: "confirm",
-      message: "Do you want to input another employee?",
-      name: "repeat",
-      default: true,
+var questions = [
+  {
+    type: "list",
+    message: "What role does this employee have?",
+    name: "role",
+    choices: ["Engineer", "Intern", "Manager"],
+  },
+  {
+    type: "input",
+    message: "What is the employee's name?",
+    name: "name",
+  },
+  {
+    type: "input",
+    message: "What is the employee's email address?",
+    name: "email",
+  },
+  {
+    type: "input",
+    message: "What is the intern's school?",
+    name: "school",
+    when: (response) => response.role === "Intern",
+  },
+  {
+    type: "github",
+    message: "What is the engineer's github username?",
+    name: "github",
+    when: (response) => response.role === "Engineer",
+  },
+  {
+    type: "officeNumber",
+    message: "What is the manager's office phone number?",
+    name: "officeNumber",
+    when: (response) => response.role === "Manager",
+  },
+  {
+    type: "confirm",
+    message: "Do you want to input another employee?",
+    name: "repeat",
+    default: true,
+  },
+];
+
+function runInquirer(array) {
+  inquirer.prompt(questions).then(function (response) {
+    employees.push(response);
+
+    if (response.repeat) {
+      runInquirer(questions);
+    } else {
+      console.log(employees);
     }
-  ])
-  .then(function(response) {
-      id = 1;
-
-    const { role, name } = response;
-
-    // switch(response.role) {
-    //     case "Manager":
-    //         const newEmployee = new Manager(response.name, id, response.email, response.officeNumber);
-    //         break;
-    //     case "Engineer":
-    //         const newEmployee = new Engineer(response.name, id, response.email, response.github);
-    //         break;
-    //     case "Intern":
-    //         const newEmployee = new Intern(response.name, id, response.email, response.school);
-    //         break;
-    // }
-
-    // console.log(newEmployee);
   });
+}
+
+runInquirer(questions);
